@@ -11,6 +11,7 @@ const Signup = () => {
     username: "",
   });
   const { email, password, username } = inputValue;
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -20,38 +21,32 @@ const Signup = () => {
   };
 
   const handleError = (err) =>
-    toast.error(err, {
-      position: "bottom-left",
-    });
+    toast.error(err, { position: "bottom-left" });
   const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "bottom-right",
-    });
+    toast.success(msg, { position: "bottom-right" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
         "https://to-do-app-qfin.onrender.com/signup",
-        {
-          ...inputValue,
-        },
+        { ...inputValue },
         { withCredentials: true }
       );
       const { success, message } = data;
+
       if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
+        handleSuccess(message); // toast show
+        navigate("/"); // turant redirect
       } else {
         handleError(message);
       }
     } catch (error) {
       console.log(error);
+      handleError("Network error, try again");
     }
+
     setInputValue({
-      ...inputValue,
       email: "",
       password: "",
       username: "",
@@ -73,7 +68,7 @@ const Signup = () => {
           />
         </div>
         <div>
-          <label htmlFor="email">Username</label>
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             name="username"

@@ -10,6 +10,7 @@ const Login = () => {
     password: "",
   });
   const { email, password } = inputValue;
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -19,39 +20,33 @@ const Login = () => {
   };
 
   const handleError = (err) =>
-    toast.error(err, {
-      position: "bottom-left",
-    });
+    toast.error(err, { position: "bottom-left" });
   const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "bottom-left",
-    });
+    toast.success(msg, { position: "bottom-left" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
         "https://to-do-app-qfin.onrender.com/login",
-        {
-          ...inputValue,
-        },
+        { ...inputValue },
         { withCredentials: true }
       );
       console.log(data);
       const { success, message } = data;
+
       if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
+        handleSuccess(message); 
+        navigate("/"); 
       } else {
         handleError(message);
       }
     } catch (error) {
       console.log(error);
+      handleError("Network error, try again");
     }
+
     setInputValue({
-      ...inputValue,
       email: "",
       password: "",
     });
