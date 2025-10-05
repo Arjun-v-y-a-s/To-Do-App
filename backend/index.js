@@ -23,7 +23,8 @@ app.use(
 );
 app.use(cookieParser());
 
-app.options("*", cors());
+app.options(/.*/, cors());
+
 
 
 app.use(express.json());
