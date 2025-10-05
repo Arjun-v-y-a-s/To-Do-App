@@ -23,6 +23,12 @@ app.use(
 );
 app.use(cookieParser());
 
+app.options("*", cors({
+    origin: 'https://to-do-app-1-raf1.onrender.com',
+    credentials: true
+}));
+
+
 app.use(express.json());
 
 
