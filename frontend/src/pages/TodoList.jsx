@@ -15,7 +15,7 @@ export default function TodoList() {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const { data } = await axios.get("http://localhost:4000/api/todos", {
+        const { data } = await axios.get("https://your-backend-render-link.onrender.com/api/todos", {
           withCredentials: true,
         });
         setTodos(data.todos);
@@ -34,7 +34,7 @@ export default function TodoList() {
     if (!newTodo.title.trim()) return alert("Title required!");
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/todos/add",
+        "https://your-backend-render-link.onrender.com/api/todos/add",
         newTodo,
         { withCredentials: true }
       );
@@ -47,7 +47,7 @@ export default function TodoList() {
 
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/todos/${id}`, {
+      await axios.delete(`https://your-backend-render-link.onrender.com/api/todos/${id}`, {
         withCredentials: true,
       });
       setTodos(todos.filter((t) => t._id !== id));
@@ -59,7 +59,7 @@ export default function TodoList() {
   const toggleDone = async (id, currentStatus) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:4000/api/todos/${id}`,
+        `https://your-backend-render-link.onrender.com/api/todos/${id}`,
         { isDone: !currentStatus },
         { withCredentials: true }
       );

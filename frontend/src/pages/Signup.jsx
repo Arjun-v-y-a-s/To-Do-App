@@ -32,7 +32,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/signup",
+        "https://your-backend-render-link.onrender.com/signup",
         {
           ...inputValue,
         },

@@ -18,7 +18,7 @@ const Home = () => {
       }
       try {
         const { data } = await axios.post(
-          "http://localhost:4000",
+          "https://your-backend-render-link.onrender.com",
           {},
           { withCredentials: true }
         );
