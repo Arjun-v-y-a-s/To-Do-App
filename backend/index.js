@@ -14,17 +14,25 @@ const dbUrl = process.env.ATLASDB_URL;
 app.use(express.json({ limit: "40kb" }));
 app.use(express.urlencoded({ limit: "40kb", extended: true }));
 
-app.use(
-    cors({
-        origin: 'https://to-do-app-1-raf1.onrender.com',
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        credentials: true,
-    })
-);
+const corsOptions = {
+  origin: 'https://to-do-app-1-raf1.onrender.com',
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Origin", corsOptions.origin);
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 app.use(cookieParser());
-
-app.options(/.*/, cors());
-
 
 
 app.use(express.json());
