@@ -36,11 +36,14 @@ const Signup = () => {
       const { success, message } = data;
 
       if (success) {
-        handleSuccess(message); // toast show
-        navigate("/"); // turant redirect
+        handleSuccess(message);
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 800);
       } else {
         handleError(message);
       }
+
     } catch (error) {
       console.log(error);
       handleError("Network error, try again");
