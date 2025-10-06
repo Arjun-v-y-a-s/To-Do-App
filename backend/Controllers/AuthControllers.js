@@ -14,7 +14,7 @@ module.exports.Signup = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "None",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
       maxAge: 3 * 24 * 60 * 60 * 1000
     });
 
@@ -45,7 +45,7 @@ module.exports.Login = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "None",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
       maxAge: 3 * 24 * 60 * 60 * 1000
     });
 

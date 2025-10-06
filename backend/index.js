@@ -18,7 +18,10 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://to-do-app-1-raf1.onrender.com", 
+    origin: [
+      "https://to-do-app-qfin.onrender.com",
+      "https://to-do-app-1-raf1.onrender.com"
+    ],
     credentials: true,
     allowedHeaders: [
       "Origin",
