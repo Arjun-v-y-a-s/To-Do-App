@@ -11,33 +11,36 @@ const Home = () => {
   const [cookies, removeCookie] = useCookies([]);
   const [username, setUsername] = useState("");
 
-  useEffect(() => {
-    const verifyCookie = async () => {
-      if (!cookies.token) {
-        navigate("/login");
-      }
-      try {
-        const { data } = await axios.post(
-          "https://to-do-app-qfin.onrender.com/userVerification",
-          {},
-          { withCredentials: true }
-        );
-        const { status, user } = data;
+ useEffect(() => {
+  const verifyCookie = async () => {
+    try {
+      // Agar cookie nahi hai, tab bhi wait kar
+      if (!cookies.token) return;
+
+      const { data } = await axios.post(
+        "https://to-do-app-qfin.onrender.com/userVerification",
+        {},
+        { withCredentials: true }
+      );
+      const { status, user } = data;
+
+      if (status) {
         setUsername(user);
-        if (status) {
-          toast(`Hello ${user}`, { position: "top-right" });
-        } else {
-          removeCookie("token");
-          navigate("/login");
-        }
-      } catch (err) {
-        console.error(err);
+        toast(`Hello ${user}`, { position: "top-right" });
+      } else {
         removeCookie("token");
         navigate("/login");
       }
-    };
-    verifyCookie();
-  }, [cookies, navigate, removeCookie]);
+    } catch (err) {
+      console.error(err);
+      removeCookie("token");
+      navigate("/login");
+    }
+  };
+
+  verifyCookie();
+}, [cookies, navigate, removeCookie]);
+
 
   const Logout = () => {
     removeCookie("token");
